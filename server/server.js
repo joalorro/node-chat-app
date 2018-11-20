@@ -8,6 +8,6 @@ const app = express()
 // configuring to find middleware
 app.use(express.static(publicPath))
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 3000, () => {
 	console.log('Server is now running on: ' + port);
 })
