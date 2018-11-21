@@ -10,6 +10,8 @@ const app = express()
 const server = http.createServer( app )
 const io = socketIO(server)
 
+const { generateMessage } = require('./utils/message.js')
+
 // configuring to find middleware
 app.use(express.static(publicPath))
 
@@ -23,14 +25,9 @@ io.on('connection', (socket) => {
 	})
 
 	// Greeting the new user who joined and notifying other users of who joined
-	socket.emit('newUser', {
-		from: 'Admin',
-		text: 'Welcome to the Chat App'
-	})
+	socket.emit('newUser', generateMessage('Admin', 'Welcome to the Chat App'))
 
-	socket.broadcast.emit('newUser', {
-		text: `A new user has joined!`
-	})	
+	socket.broadcast.emit('newUser', generateMessage('Admin', 'A new user has joined!'))	
 
 	socket.on('createMessage', (message) => {
 		console.log(message);
