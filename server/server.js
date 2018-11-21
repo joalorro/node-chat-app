@@ -13,8 +13,11 @@ const io = socketIO(server)
 // configuring to find middleware
 app.use(express.static(publicPath))
 
+// io is the connection between the server and all connections
 
 io.on('connection', (socket) => {
+	// socket is the connection to a single client
+	
 	console.log('New user connected')
 
 	socket.on('disconnect', () => {
@@ -23,9 +26,10 @@ io.on('connection', (socket) => {
 
 	socket.on('createMessage', (message) => {
 		console.log(message);
-		socket.emit('newMessage', {
-			...message,
-			fromBackend: true
+		io.emit('newMessage', {
+			from: message.from,
+			text: message.text,
+			createdAt: new Date().getTime()
 		})
 	})
 })

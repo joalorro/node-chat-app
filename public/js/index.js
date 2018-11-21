@@ -2,11 +2,6 @@
 const socket = io()
 socket.on('connect', function(){
 	console.log('Connected to server')
-
-	socket.emit('createMessage', {
-		user: 'shoboi',
-		content: 'sup from the front'
-	})
 })
 
 socket.on('disconnect', function(){
@@ -16,12 +11,11 @@ socket.on('disconnect', function(){
 socket.on('newMessage', function(message){
 	console.log(message)
 })
-
 const handleClick = () => {
 	socket.emit('createMessage', {
-		user: 'jerboi',
-		content: 'saaaah'
+		from: 'jerboi',
+		text: input.value
 	})
 }
-
+const input = document.querySelector('input')
 document.querySelector('#but').addEventListener('click', handleClick)
