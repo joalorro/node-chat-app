@@ -1,7 +1,7 @@
 
 const socket = io()
 socket.on('connect', function(){
-	console.log('Connected to server')
+	console.log('Connected');
 })
 
 socket.on('disconnect', function(){
@@ -11,6 +11,11 @@ socket.on('disconnect', function(){
 socket.on('newMessage', function(message){
 	console.log(message)
 })
+
+socket.on('newUser', function(data){
+	console.log(data);
+})
+
 const handleClick = () => {
 	socket.emit('createMessage', {
 		from: 'jerboi',
