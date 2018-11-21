@@ -20,6 +20,14 @@ io.on('connection', (socket) => {
 	socket.on('disconnect', () => {
 		console.log('User lost');
 	})
+
+	socket.on('createMessage', (message) => {
+		console.log(message);
+		socket.emit('newMessage', {
+			...message,
+			fromBackend: true
+		})
+	})
 })
 
 server.listen(port, () => {
