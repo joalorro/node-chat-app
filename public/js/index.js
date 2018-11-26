@@ -1,4 +1,3 @@
-
 const socket = io()
 socket.on('connect', function(){
 	console.log('Connected');
@@ -9,18 +8,49 @@ socket.on('disconnect', function(){
 })
 
 socket.on('newMessage', function(message){
-	console.log(message)
+	console.log('New Message', message)
+	let li = jQuery('<li></li>')
+	li.text(`${message.from}: ${message.text}`)
+
+	jQuery('#messages').append(li)
 })
 
-socket.on('newUser', function(data){
-	console.log(data);
+socket.on('newLocMsg', function(msg){
+	let li = jQuery('<li></li>')
+	let a = jQuery('<a target="_blank"> My current location </a>')
+	
+	li.text(`${msg.from}: `)
+	a.attr('href', msg.url)
+	li.append(a)
+	jQuery('#messages').append(li)
 })
 
-const handleClick = () => {
+//Event Acknowledgements
+// socket.emit('createMessage', {
+// 	from: "frank",
+// 	text: 'hi'
+// }, function(data){
+// 	console.log('Got it', data)
+// })
+
+jQuery('#message-form').on('submit', function(e){
+	e.preventDefault()
 	socket.emit('createMessage', {
 		from: 'jerboi',
-		text: input.value
+		text: jQuery('[name=message]').val()
 	})
-}
-const input = document.querySelector('input')
-document.querySelector('#but').addEventListener('click', handleClick)
+})
+
+const locBtn = jQuery('#send-loc')
+locBtn.on('click', function(e){
+	if (!navigator.geolocation){
+		return alert('Geolocation not supported by browser')
+	}
+	navigator.geolocation.getCurrentPosition(function(position){
+		console.log(position)
+		const { latitude, longitude } = position.coords
+		socket.emit('createLocMsg', { latitude, longitude })
+	}, function(){
+		alert('Unable to fetch location')
+	})
+})

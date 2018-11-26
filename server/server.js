@@ -10,7 +10,7 @@ const app = express()
 const server = http.createServer( app )
 const io = socketIO(server)
 
-const { generateMessage } = require('./utils/message.js')
+const { generateMessage, generateLocMsg } = require('./utils/message.js')
 
 // configuring to find middleware
 app.use(express.static(publicPath))
@@ -25,19 +25,15 @@ io.on('connection', (socket) => {
 	})
 
 	// Greeting the new user who joined and notifying other users of who joined
-	socket.emit('newUser', generateMessage('Admin', 'Welcome to the Chat App'))
+	socket.emit('newMessage', generateMessage('Admin', 'Welcome to the Chat App'))
 
-	socket.broadcast.emit('newUser', generateMessage('Admin', 'A new user has joined!'))	
+	socket.broadcast.emit('newMessage', generateMessage('Admin', 'A new user has joined!'))	
 
-	socket.on('createMessage', (message) => {
+	socket.on('createMessage', (message, callback) => {
 		console.log(message);
 		// emitting event to ALL connections
-
-		io.emit('newMessage', {
-			from: message.from,
-			text: message.text,
-			createdAt: new Date().getTime()
-		})
+		io.emit('newMessage', generateMessage(message.from, message.text))
+		if (callback)callback('This is from the server')
 
 		// broadcast emits to all other connections except to the origin signal
 		// socket.broadcast.emit('newMessage', {
@@ -47,6 +43,11 @@ io.on('connection', (socket) => {
 		// })
 
 	})
+
+	socket.on('createLocMsg', ({ latitude, longitude }) => {
+		io.emit('newLocMsg', generateLocMsg('Admin', latitude, longitude ))
+	})
+
 })
 
 server.listen(port, () => {
