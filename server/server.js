@@ -45,6 +45,8 @@ io.on('connection', (socket) => {
 	})
 
 	socket.on('createLocMsg', ({ latitude, longitude }) => {
+		console.log(latitude)
+		console.log(longitude)
 		io.emit('newLocMsg', generateLocMsg('Admin', latitude, longitude ))
 	})
 

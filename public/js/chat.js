@@ -16,6 +16,7 @@ socket.on('newMessage', function(message){
 })
 
 socket.on('newLocMsg', function(msg){
+	console.log(msg)
 	let li = jQuery('<li></li>')
 	let a = jQuery('<a target="_blank"> My current location </a>')
 	

@@ -7,20 +7,23 @@
 	<title>Chat App</title>
 </head>
 <body>
-	<p>Welcome to the App!</p>
-
-	<script src="/socket.io/socket.io.js"></script>
-	<form id="message-form">
-		<input type='text'name='message'/>
-		<input type='submit' id="but" value="butt"/>
-	</form>
-	<ol id="messages">
-		
-	</ol>
-
-	<button id="send-loc">Send Location</button>
-
-	<script src='./js/libs/jq.min.js'></script>
-	<script src='./js/index.js'></script>
+	<div class='centered-form__form'>
+		<form action='/chat.html'>
+			<div class='form-field'>
+				<h3>Join a chat</h3>
+			</div>
+			<div class='form-field'>
+				<label>Display Name</label>
+				<input type='text' name='name'autofocus />
+			</div>
+			<div class='form-field'>
+				<label>Room Name</label>
+				<input type='text' name='room' />
+			</div>
+			<div class='form-field'>
+				<button>Join</button>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
