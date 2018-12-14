@@ -31,17 +31,8 @@ io.on('connection', (socket) => {
 
 	socket.on('createMessage', (message, callback) => {
 		console.log(message);
-		// emitting event to ALL connections
 		io.emit('newMessage', generateMessage(message.from, message.text))
 		if (callback) callback('')
-		
-		// broadcast emits to all other connections except to the origin signal
-		// socket.broadcast.emit('newMessage', {
-		// 	from: message.from,
-		// 	text: message.text,
-		// 	createAt: new Date().getTime()
-		// })
-
 	})
 
 	socket.on('createLocMsg', ({ latitude, longitude }) => {
