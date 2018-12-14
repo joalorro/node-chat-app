@@ -33,8 +33,8 @@ io.on('connection', (socket) => {
 		console.log(message);
 		// emitting event to ALL connections
 		io.emit('newMessage', generateMessage(message.from, message.text))
-		if (callback)callback('This is from the server')
-
+		if (callback) callback('')
+		
 		// broadcast emits to all other connections except to the origin signal
 		// socket.broadcast.emit('newMessage', {
 		// 	from: message.from,

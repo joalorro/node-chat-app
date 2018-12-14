@@ -5,8 +5,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Chat App</title>
+	<link rel='stylesheet' href='/css/styles.css' >
 </head>
-<body>
+<body class='chat'>
+	<script src="/socket.io/socket.io.js"></script>
+
+	<div class='chat__sidebar'>
+		<h3>Users</h3>
+		<div id='users'></div>
+	</div>
+
+	<div class='chat__main'>
+		<ol id='messages' class='chat__messages'>
+
+		</ol>
+		<div class='chat__footer'>
+			<form id="message-form">
+				<input type='text' name='message' placeholder='Message' autofocus autocomplete='off' />
+				<button>Send Butt</button>
+			</form>
+			<button id="send-loc">Send Location</button>
+		</div>
+	</div>
+<!-- 
 	<div class='centered-form__form'>
 		<form action='/chat.html'>
 			<div class='form-field'>
@@ -24,6 +45,9 @@
 				<button>Join</button>
 			</div>
 		</form>
-	</div>
+	</div> -->
+
+	<script src='./js/libs/jq.min.js'></script>
+	<script src='./js/chat.js'></script>
 </body>
 </html>
