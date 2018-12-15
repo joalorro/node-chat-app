@@ -11,6 +11,7 @@ const server = http.createServer( app )
 const io = socketIO(server)
 
 const { generateMessage, generateLocMsg } = require('./utils/message.js')
+const { isRealString } = require('./utils/validation')
 
 // configuring to find middleware
 app.use(express.static(publicPath))
@@ -28,6 +29,13 @@ io.on('connection', (socket) => {
 	socket.emit('newMessage', generateMessage('Admin', 'Welcome to the Chat App'))
 
 	socket.broadcast.emit('newMessage', generateMessage('Admin', 'A new user has joined!'))	
+
+	socket.on('join', ({ name, room }, callback) => {
+		if (!isRealString(name) || !isRealString(room) ){
+			callback('Name and room name are required.')
+		}
+		callback()
+	})
 
 	socket.on('createMessage', (message, callback) => {
 		console.log(message);
