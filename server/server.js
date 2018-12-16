@@ -59,15 +59,16 @@ io.on('connection', (socket) => {
 	})
 
 	socket.on('createMessage', (message, callback) => {
-		console.log(message);
-		io.emit('newMessage', generateMessage(message.from, message.text))
+		const user = users.getUser(socket.id)
+		if (user && isRealString(message.text)) {
+			io.to(user.room).emit('newMessage', generateMessage( user.name, message.text))
+		}
 		if (callback) callback('')
 	})
 
 	socket.on('createLocMsg', ({ latitude, longitude }) => {
-		console.log(latitude)
-		console.log(longitude)
-		io.emit('newLocMsg', generateLocMsg('Admin', latitude, longitude ))
+		const user = users.getUser(socket.id)
+		io.to(user.room).emit('newLocMsg', generateLocMsg(user.name, latitude, longitude ))
 	})
 
 })

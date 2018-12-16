@@ -16,10 +16,10 @@ const scrollToBottom = function(){
 		messages.scrollTop(scrollHeight)
 	}
 }
+const params = jQuery.deparam(window.location.search)
 
 socket.on('connect', function(){
 	console.log('Connected');
-	const params = jQuery.deparam(window.location.search)
 	console.log(params)
 	socket.emit('join', params, function(err){
 		if (err){
@@ -67,7 +67,6 @@ jQuery('#message-form').on('submit', function(e){
 	e.preventDefault()
 	let messageTextbox = jQuery('[name=message]')
 	socket.emit('createMessage', {
-		from: 'jerboi',
 		text: messageTextbox.val()
 	}, function() {
 		messageTextbox.val('')
