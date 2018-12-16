@@ -20,6 +20,7 @@ const scrollToBottom = function(){
 socket.on('connect', function(){
 	console.log('Connected');
 	const params = jQuery.deparam(window.location.search)
+	console.log(params)
 	socket.emit('join', params, function(err){
 		if (err){
 			alert(err)
@@ -32,6 +33,16 @@ socket.on('connect', function(){
 
 socket.on('disconnect', function(){
 	console.log('Disconnected from server')
+})
+
+socket.on('updateUserList', function(users){
+	const ol = jQuery('<ol></ol>')
+
+	users.forEach(u => {
+		ol.append(jQuery('<li></li>').text(u))
+	})
+
+	jQuery('#users').html(ol)
 })
 
 socket.on('newMessage', function({ text, from, createdAt }){

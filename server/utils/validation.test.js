@@ -8,4 +8,8 @@ describe('isRealString validation function', () =>{
 	it('rejects strings with only spaces', () => {
 		expect(isRealString('  ')).toBe(false)
 	})
+
+	it('should allow string with non-space characters', () => {
+		expect(isRealString('  Developers ')).toBe(true)
+	})
 })
