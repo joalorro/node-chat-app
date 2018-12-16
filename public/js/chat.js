@@ -75,9 +75,7 @@ jQuery('#message-form').on('submit', function(e){
 
 const locBtn = jQuery('#send-loc')
 locBtn.on('click', function(e){
-	if (!navigator.geolocation){
-		return alert('Geolocation not supported by browser')
-	}
+	if (!navigator.geolocation) return alert('Geolocation not supported by browser')
 
 	locBtn.attr('disabled', 'disabled').text('Sending location...')
 
